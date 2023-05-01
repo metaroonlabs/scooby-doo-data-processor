@@ -1,66 +1,93 @@
-# ScoobyDoo Data Processor
+## ScoobyDoo Data Processor
 
-The ScoobyDoo Data Processor is a Python CLI project that processes CSV files containing plot collections of the ScoobyDoo franchise. Users can choose between two tasks: splitting long plots into smaller chunks or removing non-breaking spaces (NBSP) from the texts. The tool also provides an exit option.
-
-## Installation
-
-### Prerequisites
-
--   Python 3.x installed
--   pandas library installed (Install using: `pip install pandas`)
+A Python script to process ScoobyDoo franchise plot data in CSV format. It provides functionalities such as splitting
+long plots, removing non-breaking spaces, removing custom characters, and removing season and episode indicators.
 
 ### Clone the Repository
 
 To get started, clone this repository to your local machine using:
 
-`git clone https://github.com/username/scoobydoo-data-processor.git
-cd scoobydoo-data-processor` 
+`git clone https://github.com/username/scoobydoo-data-processor.git  
+cd scoobydoo-data-processor`
 
-## Running with a Shell Script
+### Requirements
 
-You can run the ScoobyDoo Data Processor using a shell script for a more convenient execution.
+- Python 3.x
+- pandas library
 
-### Creating the Shell Script
+### Installation
 
-Create a new file named `run_scoobydoo_data_processor.sh` in the project folder and add the following content:
+1. Install Python 3.x from the [official website](https://www.python.org/downloads/).
+2. Install the pandas library using pip:
 
-`#!/bin/sh
-
-python scoobydoo_data_processor.py -i input.csv -o output.csv -t 1000` 
-
-### Making the Script Executable
-
-In your terminal, navigate to the project folder and make the script executable by running:
-
-`chmod +x run_scoobydoo_data_processor.sh` 
-
-### Running the Script
-
-To run the script, execute the following command in your terminal (bash, zsh, or other compatible shells):
 ```
-./run_scoobydoo_data_processor.sh
+pip install pandas
+``` 
+
+### Usage
+
+1. Save the Python script as `scoobydoo_data_processor.py`.
+2. Run the script from the terminal/command prompt:
+
 ```
-The shell script will run the `scoobydoo_data_processor.py` script with the specified input, output, and token parameters.
+python scoobydoo_data_processor.py
+```
 
-## Usage
+3. Follow the on-screen prompts to select the desired action and provide necessary inputs, such as input and output CSV
+   file paths.
+   To make the script executable, run the following command in the terminal/command prompt:
 
-Run the `scoobydoo_data_processor.py` script:
+```
+chmod +x run_script.sh
+``` 
 
-`python scoobydoo_data_processor.py -i input.csv -o output.csv -t 1000` 
+### Running the script using the SH file
 
--   `-i`, `--input`: Input CSV file path
--   `-o`, `--output`: Output CSV file path
--   `-t`, `--tokens`: Maximum tokens per plot chunk (default: 1000)
+1. Save the `run_script.sh` file in the same directory as the `scoobydoo_data_processor.py` script.
+2. Open a terminal/command prompt and navigate to the directory containing both files.
+3. Run the SH file:
 
-The main menu will be displayed. Choose between splitting long plots, removing non-breaking spaces (NBSP), or exiting the program. The output will be saved in the specified output file path.
+```
+./run_script.sh
+``` 
+
+This will run the `scoobydoo_data_processor.py` script and display the command-line interface for selecting the desired
+action and providing necessary inputs.
+
+### Features
+
+1. Split long plots: Splits long plots into smaller chunks based on the user-defined token limit.
+2. Remove specific characters:
+    - Remove non-breaking spaces (NBSP)
+    - Remove custom characters
+    - Remove season and episode indicators
+
+### Example
+
+An example CSV file format with the first 2 columns:
+
+```
+`Plot Source Name,Plot` 
+```
+
+### Python Script
+
+The Python script `scoobydoo_data_processor.py` processes the CSV files containing plot collections of the ScoobyDoo
+franchise. The script reads a CSV file, performs the desired action, and writes the processed data to a new CSV file.
+The script provides a simple command-line interface for the user to choose the desired action and input the necessary
+parameters.
+
+After implementing the script, you will be able to process the CSV files by running the script and following the
+on-screen prompts. The script will guide you through selecting the desired action and providing the necessary inputs,
+such as input and output CSV file paths, maximum tokens per plot chunk, and custom characters to remove.
 
 ## Contributing
 
-1.  Fork the repository on GitHub.
-2.  Clone the forked repository to your local machine.
-3.  Create a new branch for your feature or bugfix (`git checkout -b my-feature`).
-4.  Commit your changes (`git commit -m 'Add my feature'`).
-5.  Push your branch to your fork on GitHub (`git push origin my-feature`).
-6.  Open a pull request on the original repository.
+1. Fork the repository on GitHub.
+2. Clone the forked repository to your local machine.
+3. Create a new branch for your feature or bugfix (`git checkout -b my-feature`).
+4. Commit your changes (`git commit -m 'Add my feature'`).
+5. Push your branch to your fork on GitHub (`git push origin my-feature`).
+6. Open a pull request on the original repository.
 
 
