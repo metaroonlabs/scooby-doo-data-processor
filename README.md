@@ -1,7 +1,8 @@
 
-# ScoobyDoo Plot Splitter
+#   
+ScoobyDoo Plot Splitter
 
-ScoobyDoo Plot Splitter is a Python project that processes CSV files containing plot collections of the ScoobyDoo franchise. It splits long plots into smaller chunks, inserting them into new rows with an appropriate naming format.
+ScoobyDoo Plot Splitter is a Python project that processes CSV files containing plot collections of the ScoobyDoo franchise. It splits long plots into smaller chunks, inserting them into new rows with an appropriate naming format. It also has the option to remove non-breaking spaces (NBSP) from the texts.
 
 ## Installation
 
@@ -27,13 +28,18 @@ mathematicaCopy code
 
 `Plot Source Name,Plot` 
 
-2.  Run the `plot_splitter.py` script:
+2.  Run the `plot_splitter.py` script with the appropriate options:
 
 bashCopy code
 
-`python plot_splitter.py` 
+`python plot_splitter.py -i input.csv -o output.csv -t 1000 --remove-nbsp` 
 
-3.  The output will be saved in the same directory as `output.csv`.
+-   `-i`, `--input`: Input CSV file path
+-   `-o`, `--output`: Output CSV file path
+-   `-t`, `--tokens`: Maximum tokens per plot chunk (default: 1000)
+-   `--remove-nbsp`: Remove non-breaking spaces from the texts
+
+3.  The output will be saved in the specified output file path.
 
 ## Contributing
 
