@@ -1,6 +1,7 @@
 import argparse
-import pandas as pd
 import math
+
+import pandas as pd
 
 
 # Add ASCII text logo and main menu
@@ -86,7 +87,7 @@ def process_data(df, max_tokens, remove_nbsp):
                     'Plot': f"part {i} of {plot_source_name} : {chunk}"
                 })
         else:
-            new_rows.append({'Plot Source Name': plot_source_name, 'Plot': plot})
+            new_rows.append({'Plot Source Name': plot_source_name, 'Plot': f"{plot_source_name}: {plot}"})
 
     return pd.DataFrame(new_rows)
 
