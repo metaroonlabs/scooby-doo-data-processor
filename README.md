@@ -46,8 +46,6 @@ The shell script will run the `scoobydoo_data_processor.py` script with the spec
 
 Run the `scoobydoo_data_processor.py` script:
 
-bashCopy code
-
 `python scoobydoo_data_processor.py -i input.csv -o output.csv -t 1000` 
 
 -   `-i`, `--input`: Input CSV file path
