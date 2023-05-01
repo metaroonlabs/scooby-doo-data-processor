@@ -1,5 +1,6 @@
 import argparse
 import pandas as pd
+import math
 
 
 # Add ASCII text logo and main menu
@@ -53,7 +54,16 @@ def split_at_sentence(text, max_tokens):
 
 # Define the function to split the plots
 def split_plot(plot, max_tokens):
-    return split_at_sentence(plot, max_tokens)
+    words = plot.split()
+    num_parts = math.ceil(len(words) / max_tokens)
+    tokens_per_part = math.ceil(len(words) / num_parts)
+
+    chunks = []
+    for i in range(0, len(words), tokens_per_part):
+        chunk = ' '.join(words[i:i + tokens_per_part])
+        chunks.append(chunk)
+
+    return chunks
 
 
 # Process the DataFrame
