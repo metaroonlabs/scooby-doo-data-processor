@@ -63,8 +63,4 @@ The main menu will be displayed. Choose between splitting long plots, removing n
 5.  Push your branch to your fork on GitHub (`git push origin my-feature`).
 6.  Open a pull request on the original repository.
 
-## License
 
-This project is licensed under the MIT License - see the [LICENSE](https://chat.openai.com/c/LICENSE) file for details.
-
-The project documentation has been updated to include the complete `scoobydoo_data_processor.py` script provided earlier. This should cover all the requested features and provide a clear guide on how to use and contribute to the project.
