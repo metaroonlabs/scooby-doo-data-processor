@@ -18,10 +18,13 @@ def display_logo():
 
 
 def main_menu():
-    print("\nScoobyDoo Data Tool - Main Menu")
+    print("\nScoobyDoo Data Processor - Main Menu")
     print("1. Split long plots")
     print("2. Remove non-breaking spaces (NBSP)")
     print("3. Exit\n")
+    print("-i", "--input", "Input CSV file path")
+    print("-o", "--output", "Output CSV file path")
+    print("-t", "--tokens", "Maximum tokens per plot chunk (default: 1000)")
 
 
 # Create a function to handle user input
@@ -100,15 +103,16 @@ def parse_args():
 def handle_action(choice, args):
     if choice == "1":
         args.action = "splitter"
-        main(args)
+        return True
     elif choice == "2":
         args.action = "remove_nbsp"
-        main(args)
+        return True
     elif choice == "3":
         print("Goodbye!")
         exit()
     else:
         print("Invalid option, please try again.")
+        return False
 
 
 # main function
@@ -116,16 +120,21 @@ def main(args):
     display_logo()
     main_menu()
     choice = get_user_choice()
+    valid_choice = handle_action(choice, args)
 
-    if args.action == "splitter":
-        df = read_csv(args.input)
-        processed_df = process_data(df, args.tokens, remove_nbsp=False)
-        write_csv(processed_df, args.output)
-    elif args.action == "remove_nbsp":
-        df = read_csv(args.input)
-        processed_df = process_data(df, args.tokens, remove_nbsp=True)
-        write_csv(processed_df, args.output)
-        handle_action(choice, args)
+    if valid_choice:
+        if args.input is None or args.output is None:
+            print("Please provide input and output file paths.")
+            return
+
+        if args.action == "splitter":
+            df = read_csv(args.input)
+            processed_df = process_data(df, args.tokens, remove_nbsp=False)
+            write_csv(processed_df, args.output)
+        elif args.action == "remove_nbsp":
+            df = read_csv(args.input)
+            processed_df = process_data(df, args.tokens, remove_nbsp=True)
+            write_csv(processed_df, args.output)
 
 
 # the conditional block
