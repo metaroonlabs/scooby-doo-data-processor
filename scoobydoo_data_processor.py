@@ -83,7 +83,7 @@ def process_data(df, max_tokens, remove_nbsp):
             for i, chunk in enumerate(chunks, 1):
                 new_rows.append({
                     'Plot Source Name': f"{plot_source_name} - part {i}",
-                    'Plot': f"part {i}: {chunk}"
+                    'Plot': f"part {i} of {plot_source_name} : {chunk}"
                 })
         else:
             new_rows.append({'Plot Source Name': plot_source_name, 'Plot': plot})
