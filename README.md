@@ -3,13 +3,6 @@
 
 ScoobyDoo Plot Splitter is a Python project that processes CSV files containing plot collections of the ScoobyDoo franchise. It splits long plots into smaller chunks, inserting them into new rows with an appropriate naming format.
 
-## Table of Contents
-
--   [Installation](https://chat.openai.com/?model=gpt-4#installation)
--   [Usage](https://chat.openai.com/?model=gpt-4#usage)
--   [Contributing](https://chat.openai.com/?model=gpt-4#contributing)
--   [License](https://chat.openai.com/?model=gpt-4#license)
-
 ## Installation
 
 ### Prerequisites
