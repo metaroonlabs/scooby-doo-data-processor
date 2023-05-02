@@ -77,44 +77,51 @@ def split_plot(plot, max_tokens):
     return chunks
 
 
+def tokenize(text):
+    return re.findall(r'\b\w+\b', text)
+
+
+def get_num_chunks(tokens, max_tokens):
+    return (len(tokens) + max_tokens - 1) // max_tokens
+
+
 # Function to process the data by either splitting long plots or removing specific characters
 # Updated process_data function with 'remove_se' option
-def process_data(df, max_tokens, action, remove_char=None):
+def process_data(df, max_tokens, action):
     new_rows = []
 
     for index, row in df.iterrows():
-        plot_source_name = row['Plot Source Name']
-        plot = row['Plot']
-
         if action == 'split':
-            if len(plot.split()) > max_tokens:
-                chunks = split_plot(plot, max_tokens)
-                for idx, chunk in enumerate(chunks):
-                    new_row = {
-                        'Plot Source Name': f"{plot_source_name} - part {idx + 1}",
-                        'Plot': chunk
-                    }
-                    new_rows.append(new_row)
-            else:
-                new_rows.append(row)
-        elif action == 'remove_char':
-            if remove_char:
-                plot = plot.replace(remove_char, '')
-            else:
-                plot = plot.replace('\xa0', '')
-            new_row = {
-                'Plot Source Name': plot_source_name,
-                'Plot': plot
-            }
-            new_rows.append(new_row)
-        elif action == 'remove_se':
-            plot_source_name = remove_season_episode(plot_source_name)
-            plot = remove_season_episode(plot)
+            plot_source_name = row['Plot Source Name']
+            plot = row['Plot']
 
-            new_row = {
-                'Plot Source Name': plot_source_name,
-                'Plot': plot
-            }
+            tokens = tokenize(plot)
+            num_chunks = get_num_chunks(tokens, max_tokens)
+
+            for i in range(num_chunks):
+                chunk_start = i * max_tokens
+                chunk_end = min((i + 1) * max_tokens, len(tokens))
+                chunk_tokens = tokens[chunk_start:chunk_end]
+
+                new_row = {}
+                new_row['Plot Source Name'] = f"{plot_source_name} - part {i + 1}"
+                new_row['Plot'] = ' '.join(chunk_tokens)
+                new_rows.append(new_row)
+
+        elif action == 'remove_nbsp':
+            new_row = row.copy()
+            new_row['Plot'] = new_row['Plot'].replace(u'\xa0', u' ')
+            new_rows.append(new_row)
+
+        elif action == 'remove_custom':
+            custom_char = input("Enter the custom character(s) to remove: ")
+            new_row = row.copy()
+            new_row['Plot'] = new_row['Plot'].replace(custom_char, '')
+            new_rows.append(new_row)
+
+        elif action == 'remove_season_episode':
+            new_row = row.copy()
+            new_row['Plot'] = re.sub(r'S\d{2}E\d{2}', '', new_row['Plot'])
             new_rows.append(new_row)
 
     return pd.DataFrame(new_rows)
@@ -165,43 +172,37 @@ def main():
         print("3. Exit")
         choice = input("Please select an option (1-3): ")
 
-        if choice == '1':
+        if choice == "1":
             input_file = input("Enter the Input CSV file path: ")
-            output_file = input("Enter the Output CSV file path: ")
-            max_tokens = int(input("Enter the maximum tokens per plot chunk (default: 1000): "))
             df = read_csv(input_file)
+            max_tokens = int(input("Enter the maximum tokens per plot chunk (default: 1000): "))
             result = process_data(df, max_tokens, 'split')
-            write_csv(result, output_file)
-            print("Splitting process completed!")
-        elif choice == '2':
+
+        elif choice == "2":
             print("1. Remove non-breaking spaces (NBSP)")
             print("2. Remove custom character")
             print("3. Remove season and episode indicators")
             sub_choice = input("Please select an option (1-3): ")
+
             input_file = input("Enter the Input CSV file path: ")
-            output_file = input("Enter the Output CSV file path: ")
             df = read_csv(input_file)
 
-            if sub_choice == '1':
-                result = process_data(df, None, 'remove_char')
-                print("Non-breaking spaces removed!")
-            elif sub_choice == '2':
+            if sub_choice == "1":
+                result = process_data(df, None, 'remove_nbsp')
+            elif sub_choice == "2":
                 custom_char = input("Enter the custom character to remove: ")
-                result = process_data(df, None, 'remove_char', custom_char)
-                print(f"Custom character '{custom_char}' removed!")
-            elif sub_choice == '3':
-                result = process_data(df, None, 'remove_se')
-                print("Season and episode indicators removed!")
-            else:
-                print("Invalid option. Please try again.")
-                continue
-            write_csv(result, output_file)
-        elif choice == '3':
+                result = process_data(df, custom_char, 'remove_custom')
+            elif sub_choice == "3":
+                result = process_data(df, None, 'remove_season_episode')
+
+        elif choice == "3":
             print("Exiting...")
             break
-        else:
-            print("Invalid option. Please try again.")
-            continue
+
+        if choice in ['1', '2']:
+            output_file = input("Enter the Output CSV file path: ")
+            result.to_csv(output_file, index=False)
+            print(f"Data processed! Results saved to {output_file}\n")
 
 
 # the conditional block
