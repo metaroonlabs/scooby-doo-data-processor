@@ -1,5 +1,6 @@
 import csv
 import re
+import roman
 
 
 def split_long_plots(input_file, output_file, max_tokens=1000):
@@ -13,16 +14,37 @@ def split_long_plots(input_file, output_file, max_tokens=1000):
 
         for row in reader:
             plot = row[headers.index("Plot")]
-            tokens = plot.split()
-            chunks = []
+            plot_source_name = row[headers.index("Plot Source Name")]
 
-            for i in range(0, len(tokens), max_tokens):
-                chunk = " ".join(tokens[i:i + max_tokens])
+            # Split plot into sentences
+            sentences = re.split(r'(?<=\.)\s+', plot)
+
+            # Split sentences into chunks with max_tokens
+            chunks, chunk = [], []
+            token_count = 0
+            for sentence in sentences:
+                sentence_tokens = len(sentence.split())
+                if token_count + sentence_tokens <= max_tokens:
+                    chunk.append(sentence)
+                    token_count += sentence_tokens
+                else:
+                    chunks.append(chunk)
+                    chunk = [sentence]
+                    token_count = sentence_tokens
+            if chunk:
                 chunks.append(chunk)
 
-            for chunk in chunks:
+            for idx, chunk in enumerate(chunks):
+                part = idx + 1
+
                 new_row = row.copy()
-                new_row[headers.index("Plot")] = chunk
+                if part == 1:
+                    new_row[headers.index("Plot Source Name")] = f"{plot_source_name} - part I"
+                else:
+                    new_row[headers.index("Plot Source Name")] = f"{plot_source_name} - part {roman.toRoman(part)}"
+                    chunk[0] = f"[{plot_source_name}] - part {roman.toRoman(part - 1)} continue as this.. {chunk[0]}"
+
+                new_row[headers.index("Plot")] = " ".join(chunk)
                 writer.writerow(new_row)
 
 

@@ -1,5 +1,6 @@
 import csvUtils as csvUtils
 import jsonUtils as jsonUtils
+import roman
 
 
 # Add ASCII text logo and main menu
