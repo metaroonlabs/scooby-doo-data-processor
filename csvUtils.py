@@ -2,6 +2,10 @@ import csv
 import re
 import roman
 
+import re
+
+import re
+
 
 def split_long_plots(input_file, output_file, max_tokens=1000):
     with open(input_file, "r", newline="", encoding="utf-8") as infile, \
@@ -34,18 +38,19 @@ def split_long_plots(input_file, output_file, max_tokens=1000):
             if chunk:
                 chunks.append(chunk)
 
-            for idx, chunk in enumerate(chunks):
-                part = idx + 1
+            if len(chunks) == 1:
+                writer.writerow(row)
+            else:
+                for idx, chunk in enumerate(chunks):
+                    part = idx + 1
 
-                new_row = row.copy()
-                if part == 1:
-                    new_row[headers.index("Plot Source Name")] = f"{plot_source_name} - part I"
-                else:
+                    new_row = row.copy()
                     new_row[headers.index("Plot Source Name")] = f"{plot_source_name} - part {roman.toRoman(part)}"
-                    chunk[0] = f"[{plot_source_name}] - part {roman.toRoman(part - 1)} continue as this.. {chunk[0]}"
+                    if part > 1:
+                        chunk[0] = chunk[0]
 
-                new_row[headers.index("Plot")] = " ".join(chunk)
-                writer.writerow(new_row)
+                    new_row[headers.index("Plot")] = " ".join(chunk)
+                    writer.writerow(new_row)
 
 
 def remove_nbsp(input_file, output_file):
