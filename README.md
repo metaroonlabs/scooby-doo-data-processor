@@ -1,93 +1,92 @@
-## ScoobyDoo Data Processor
+# ScoobyDooCSVTool
 
-A Python script to process ScoobyDoo franchise plot data in CSV format. It provides functionalities such as splitting
-long plots, removing non-breaking spaces, removing custom characters, and removing season and episode indicators.
+ScoobyDooCSVTool is a command-line interface (CLI) Python application that processes ScoobyDoo franchise data in CSV
+format. The tool provides additional functionality for generating a JSON file from the CSV data.
 
-### Clone the Repository
+## Features
 
-To get started, clone this repository to your local machine using:
+- Split long plots into multiple rows
+- Remove specific characters from plots
+  - Non-breaking spaces (NBSP)
+  - Custom characters
+  - Season and episode indicators
+- Convert CSV data to JSON format
 
-`git clone https://github.com/username/scoobydoo-data-processor.git  
-cd scoobydoo-data-processor`
+## Installation
 
-### Requirements
+1. Clone the repository or download the source files.
 
-- Python 3.x
-- pandas library
-
-### Installation
-
-1. Install Python 3.x from the [official website](https://www.python.org/downloads/).
-2. Install the pandas library using pip:
-
-```
-pip install pandas
-``` 
-
-### Usage
-
-1. Save the Python script as `scoobydoo_data_processor.py`.
-2. Run the script from the terminal/command prompt:
-
-```
-python scoobydoo_data_processor.py
+```bash
+git clone https://github.com/yourusername/ScoobyDooCSVTool.git
 ```
 
-3. Follow the on-screen prompts to select the desired action and provide necessary inputs, such as input and output CSV
-   file paths.
-   To make the script executable, run the following command in the terminal/command prompt:
+2. Navigate to the project directory.
 
-```
-chmod +x run_script.sh
-``` 
-
-### Running the script using the SH file
-
-1. Save the `run_script.sh` file in the same directory as the `scoobydoo_data_processor.py` script.
-2. Open a terminal/command prompt and navigate to the directory containing both files.
-3. Run the SH file:
-
-```
-./run_script.sh
-``` 
-
-This will run the `scoobydoo_data_processor.py` script and display the command-line interface for selecting the desired
-action and providing necessary inputs.
-
-### Features
-
-1. Split long plots: Splits long plots into smaller chunks based on the user-defined token limit.
-2. Remove specific characters:
-    - Remove non-breaking spaces (NBSP)
-    - Remove custom characters
-    - Remove season and episode indicators
-
-### Example
-
-An example CSV file format with the first 2 columns:
-
-```
-`Plot Source Name,Plot` 
+```bash
+cd ScoobyDooCSVTool
 ```
 
-### Python Script
+3. Install the required dependencies.
 
-The Python script `scoobydoo_data_processor.py` processes the CSV files containing plot collections of the ScoobyDoo
-franchise. The script reads a CSV file, performs the desired action, and writes the processed data to a new CSV file.
-The script provides a simple command-line interface for the user to choose the desired action and input the necessary
-parameters.
+```bash
+pip install -r requirements.txt
+```
 
-After implementing the script, you will be able to process the CSV files by running the script and following the
-on-screen prompts. The script will guide you through selecting the desired action and providing the necessary inputs,
-such as input and output CSV file paths, maximum tokens per plot chunk, and custom characters to remove.
+## Usage
+
+1. Run the `main.py` script.
+
+```bash
+python main.py
+```
+
+2. Follow the prompts and select the desired operation.
+
+### Split long plots
+
+- Enter the input CSV file path.
+- Enter the output CSV file path.
+- Enter the maximum tokens per plot chunk (default: 1000).
+- The tool will split long plots in the input CSV file into multiple rows based on the maximum tokens value and save the
+  processed data to the output CSV file.
+
+### Remove specific characters
+
+#### Remove non-breaking spaces (NBSP)
+
+- Enter the input CSV file path.
+- Enter the output CSV file path.
+- The tool will remove non-breaking spaces from the 'Plot' column in the input CSV file and save the processed data to
+  the output CSV file.
+
+#### Remove custom character
+
+- Enter the input CSV file path.
+- Enter the output CSV file path.
+- Enter the custom character to remove.
+- The tool will remove the custom character from the 'Plot' column in the input CSV file and save the processed data to
+  the output CSV file.
+
+#### Remove season and episode indicators
+
+- Enter the input CSV file path.
+- Enter the output CSV file path.
+- The tool will remove season and episode indicators like "S01E01" from all columns and rows in the input CSV file and
+  save the processed data to the output CSV file.
+
+### Story plots data preparation to a JSON
+
+- Enter the input CSV file path.
+- Enter the number of JSON data objects to generate (default: all CSV data).
+- The tool will create a JSON file named "story_plots.json" with data from the input CSV file, where the "Plot Source
+  Name" column maps to the JSON's "PlotSource" field and the "Plot" column maps to the JSON's "Plot" field.
 
 ## Contributing
 
-1. Fork the repository on GitHub.
-2. Clone the forked repository to your local machine.
-3. Create a new branch for your feature or bugfix (`git checkout -b my-feature`).
-4. Commit your changes (`git commit -m 'Add my feature'`).
-5. Push your branch to your fork on GitHub (`git push origin my-feature`).
-6. Open a pull request on the original repository.
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
+Please make sure to update the tests as appropriate.
 
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
