@@ -1,6 +1,7 @@
 import csvUtils as csvUtils
-
 import jsonUtils as jsonUtils
+import textUtils as textUtils
+import roman
 
 
 # Add ASCII text logo and main menu
@@ -28,7 +29,8 @@ def display_main_menu():
     print("1. Split long plots")
     print("2. Remove specific characters")
     print("3. Story plots data preparation to a JSON")
-    print("4. Exit")
+    print("4. Generate a text file")
+    print("5. Exit")
 
 
 def display_character_removal_menu():
@@ -86,6 +88,13 @@ def main():
             print("story_plots.json has been generated successfully.\n")
 
         elif choice == "4":
+            # Generate a text file
+            input_file = input("Enter the input CSV file path: ")
+            num_story_inputs = int(input("Enter the number of story inputs to include (default: all CSV data): "))
+            textUtils.generate_text_file(input_file, num_story_inputs)
+            print("story_plots.txt has been generated successfully.\n")
+
+        elif choice == "5":
             # Exit
             print("Exiting ScoobyDooCSVTool.")
             break

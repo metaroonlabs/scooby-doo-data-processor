@@ -1,8 +1,24 @@
 import tkinter as tk
-from tkinter import filedialog, messagebox
+from tkinter import filedialog, messagebox, simpledialog
 from tkinter import ttk
 import csvUtils
 import jsonUtils
+import textUtils  # import the textUtils module
+
+
+def generate_text_file():
+    input_file = filedialog.askopenfilename(title="Select the input CSV file")
+    if not input_file:
+        return
+
+    num_story_inputs = simpledialog.askinteger("Number of Story Inputs",
+                                               "Enter the number of story inputs to include (default: all CSV data):",
+                                               minvalue=1)
+    if not num_story_inputs:
+        return
+
+    textUtils.generate_text_file(input_file, num_story_inputs)  # call the new function from the textUtils module
+    messagebox.showinfo("Success", "story_plots.txt has been generated successfully.")
 
 
 def story_plots_data_preparation():
@@ -121,9 +137,13 @@ class ScoobyDooCSVToolGUI(tk.Tk):
                                                          command=story_plots_data_preparation)
         story_plots_data_preparation_button.grid(row=4, column=0, pady=5)
 
+        # Add the Generate Text File button
+        generate_text_file_button = ttk.Button(main_frame, text="4. Generate Text File", command=generate_text_file)
+        generate_text_file_button.grid(row=5, column=0, pady=5)
+
         # Add the Exit button
-        exit_button = ttk.Button(main_frame, text="4. Exit", command=self.confirm_exit)
-        exit_button.grid(row=5, column=0, pady=5)
+        exit_button = ttk.Button(main_frame, text="5. Exit", command=self.confirm_exit)
+        exit_button.grid(row=6, column=0, pady=5)
 
     def remove_specific_characters(self):
         # Create a new Top-level window
