@@ -1,10 +1,23 @@
 # ScoobyDoo CSV Tool with Tkinter GUI
 
-ScoobyDoo CSV Tool is a Python application that processes CSV files containing story plot information. It provides the following functionalities:
+ScoobyDoo CSV Tool is a Python application that processes CSV files containing story plot information. It provides the
+following functionalities:
 
-1. Split long plots
-2. Remove specific characters
-3. Story plots data preparation to a JSON
+## Features
+
+1. **Split long plots**: Splits long plots in a CSV file into multiple smaller plots, based on a given maximum token
+   count.
+2. **Remove specific characters**: This feature provides several options:
+   - Remove non-breaking spaces (NBSP)
+   - Remove custom character
+   - Remove season and episode indicators
+3. **Story plots data preparation to a JSON**: Extract a specified number of story plots from the CSV file and generate
+   a `story_plots.json` file.
+4. **Generate Text File**: Extract a specified number of story plots from the CSV file and generate a `story_plots.txt`
+   file in a given format.
+5. **Generate PDF File**: Extract a specified number of story plots from the CSV file and generate a `story_plots.pdf`
+   file in a given format.
+6. **Exit**: Exit the application.
 
 This version of the project includes a Tkinter-based graphical user interface (GUI) for a more user-friendly experience.
 
@@ -56,3 +69,8 @@ The application will open in a new window with the main menu.
 ### Exit
 
 To exit the application, click on the 'Exit' button and confirm your choice.
+
+Sure, here's how you can update the `README.md` file in your GitHub repository to include the new features.
+
+---
+
