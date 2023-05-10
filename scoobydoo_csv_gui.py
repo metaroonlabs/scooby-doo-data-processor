@@ -4,6 +4,22 @@ from tkinter import ttk
 import csvUtils
 import jsonUtils
 import textUtils  # import the textUtils module
+import pdfUtils  # import the pdfUtils module
+
+
+def generate_pdf_file():
+    input_file = filedialog.askopenfilename(title="Select the input CSV file")
+    if not input_file:
+        return
+
+    num_story_inputs = simpledialog.askinteger("Number of Story Inputs",
+                                               "Enter the number of story inputs to include (default: all CSV data):",
+                                               minvalue=1)
+    if not num_story_inputs:
+        return
+
+    pdfUtils.generate_pdf_file(input_file, num_story_inputs)  # call the new function from the pdfUtils module
+    messagebox.showinfo("Success", "story_plots.pdf has been generated successfully.")
 
 
 def generate_text_file():
@@ -141,9 +157,13 @@ class ScoobyDooCSVToolGUI(tk.Tk):
         generate_text_file_button = ttk.Button(main_frame, text="4. Generate Text File", command=generate_text_file)
         generate_text_file_button.grid(row=5, column=0, pady=5)
 
+        # Add the Generate PDF File button
+        generate_pdf_file_button = ttk.Button(main_frame, text="5. Generate PDF File", command=generate_pdf_file)
+        generate_pdf_file_button.grid(row=6, column=0, pady=5)
+
         # Add the Exit button
-        exit_button = ttk.Button(main_frame, text="5. Exit", command=self.confirm_exit)
-        exit_button.grid(row=6, column=0, pady=5)
+        exit_button = ttk.Button(main_frame, text="6. Exit", command=self.confirm_exit)
+        exit_button.grid(row=7, column=0, pady=5)
 
     def remove_specific_characters(self):
         # Create a new Top-level window
